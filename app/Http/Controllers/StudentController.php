@@ -28,7 +28,7 @@ class StudentController extends Controller
     {
         $data = $request->validated();
 
-        $student = Students::create($data);
+        $student = Student::create($data);
 
         Log::info('New student created', [
             'id'        => $student->id,
