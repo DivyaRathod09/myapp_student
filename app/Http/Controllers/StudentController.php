@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Http\Requests\StudentRequest;
+use Illuminate\Support\Facades\Log;
+
 
 class StudentController extends Controller
 {
@@ -24,11 +26,17 @@ class StudentController extends Controller
     //     return redirect()->route('students.index')->with('success', 'Student added successfully.');
     // }
 
-    public function store(StudentRequest $request)
-    {
+
+public function store(StudentRequest $request)
+{
+    try {
         $data = $request->validated();
 
+        // ✅ This line is correct
         $student = Student::create($data);
+
+        // ❌ Intentional error (calling undefined function)
+        $student->someUndefinedMethod();
 
         Log::info('New student created', [
             'id'        => $student->id,
@@ -39,6 +47,16 @@ class StudentController extends Controller
         ]);
 
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
+    } catch (\Exception $e) {
+        // This will catch the error and log it
+        Log::error('Error while creating student', [
+            'message' => $e->getMessage(),
+            'trace'   => $e->getTraceAsString(),
+        ]);
+
+        return redirect()->back()->with('error', 'Something went wrong! Check logs.');
     }
+}
+
 
 }
