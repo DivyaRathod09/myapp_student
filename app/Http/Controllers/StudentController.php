@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Http\Requests\StudentRequest;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 
 class StudentController extends Controller
@@ -35,7 +35,6 @@ public function store(StudentRequest $request)
         // ✅ This line is correct
         $student = Student::create($data);
 
-        // ❌ Intentional error (calling undefined function)
         $student->someUndefinedMethod();
 
         Log::info('New student created', [
