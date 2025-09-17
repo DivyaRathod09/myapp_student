@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Http\Requests\StudentRequest;
 
-use Illuminate\Support\Facades\Log;
-
 
 class StudentController extends Controller
 {
@@ -21,42 +19,11 @@ class StudentController extends Controller
         return view('students.create');
     }
 
-    // public function store(StudentRequest $request)
-    // {
-    //     Student::create($request->validated());
-    //     return redirect()->route('students.index')->with('success', 'Student added successfully.');
-    // }
-
-
-public function store(StudentRequest $request)
-{
-    try {
-        $data = $request->validated();
-
-        // ✅ This line is correct
-        $student = Student::create($data);
-
-        $student->someUndefinedMethod();
-
-        Log::info('New student created', [
-            'id'        => $student->id,
-            'name'      => $student->name,
-            'email'     => $student->email,
-            'mobile_no' => $student->mobile_no,
-            'stream'    => $student->stream,
-        ]);
-
+    public function store(StudentRequest $request)
+    {
+        // ❌ Error: Using wrong method 'creatte' instead of 'create'
+        Student::creatte($request->validated());
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
-    } catch (\Exception $e) {
-        // This will catch the error and log it
-        Log::error('Error while creating student', [
-            'message' => $e->getMessage(),
-            'trace'   => $e->getTraceAsString(),
-        ]);
-
-        return redirect()->back()->with('error', 'Something went wrong! Check logs.');
     }
-}
-
 
 }
