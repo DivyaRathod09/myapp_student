@@ -21,8 +21,7 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request)
     {
-        // ❌ Error: Using wrong method 'creatte' instead of 'create'
-        Student::creatte($request->validated());
+        Student::create($request->validate());
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
     }
 
