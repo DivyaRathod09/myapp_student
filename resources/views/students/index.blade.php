@@ -15,6 +15,7 @@
       <th>Email</th>
       <th>Mobile</th>
       <th>Stream</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +26,13 @@
         <td>{{ $student->email }}</td>
         <td>{{ $student->mobile_no }}</td>
         <td>{{ $student->stream }}</td>
+        <td>
+          <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </td>
       </tr>
     @endforeach
   </tbody>

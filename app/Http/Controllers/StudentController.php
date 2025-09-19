@@ -1,10 +1,9 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Http\Requests\StudentRequest;
-
 
 class StudentController extends Controller
 {
@@ -21,8 +20,23 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request)
     {
-        Student::create($request->validate());
+        Student::create($request->validated());
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
+    }
+
+
+    public function destroy(Student $student)
+    {
+        try {
+            $student->invalid_column_name;  
+
+            $student->delete();
+
+            return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+        } catch (\Exception $e) {
+            \Log::error("Delete Student Error: " . $e->getMessage());
+            return redirect()->route('students.index')->with('error', 'Something went wrong while deleting student.');
+        }
     }
 
 }
