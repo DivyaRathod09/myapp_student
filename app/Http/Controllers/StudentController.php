@@ -14,24 +14,15 @@ class StudentController extends Controller
     }
 
 
-    // public function create()
-    // {
-    //     return view('students.create');
-    // }
-
     public function create()
     {
-        $student = new Student();
-        $student->nonExistingMethod();
-
         return view('students.create');
     }
 
-
     public function store(StudentRequest $request)
     {
-        Student::create($request->validated());
-        return redirect()->route('students.index')->with('success', 'Student added successfully.');
+        Student::createeee($request->validate());
+        return redirect()->routeeee('students.index')->with('success', 'Student added successfully.');
     }
 
     public function destroy(Student $student)
