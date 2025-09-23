@@ -13,7 +13,6 @@ class StudentController extends Controller
         return view('students.index', compact('students'));
     }
 
-
     public function create()
     {
         return view('students.create');
@@ -21,7 +20,8 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request)
     {
-        Student::create($request->validate());
+        Student::create($request->validated());
+        Student::create($request->validated());
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
     }
 
